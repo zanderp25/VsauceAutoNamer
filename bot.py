@@ -1,4 +1,4 @@
-import discord
+import discord, traceback
 intents = discord.Intents(messages=True, members=True, guilds=True)
 from discord.ext import commands
 token = "Nzg0MTg4NzkwNjc4ODgwMzI2.X8lquQ.KE81OC4cNtuTkQ7kpiBztpKFX-g"
@@ -11,7 +11,10 @@ async def on_ready():
 
 @bot.event
 async def on_member_join(member):
-    await member.edit(nick=await get_next())
+    try:
+        await member.edit(nick=await get_next())
+    except Exception:
+        bot.guilds[0].get_member(511655498676699136).send(f"Error! ```{traceback.format_exc()}```")
 
 async def get_next():
     x = [m.nick for m in bot.guilds[0].members if not m.bot]
@@ -32,10 +35,14 @@ async def ping(ctx):
 @bot.command(name = "next", aliases = ['nextmember'])
 async def nextvsauce(ctx):
     """Shows the next member's name."""
-    await ctx.send(embed = discord.Embed(title = "The next Vsauce", description = f"The next Vsauce will be {await get_next()}.", color = discord.Color.blurple()))
+    try:
+        await ctx.send(embed = discord.Embed(title = "The next Vsauce", description = f"The next Vsauce will be {await get_next()}.", color = discord.Color.blurple()))
+    except Exception as e:
+        await ctx.send(embed = discord.Embed(title = "Error", description = f"I have encountered an error.```{e}```", color = discord.Color.red()))
 
 @bot.command(name = "list")
 async def listmembers(ctx):
+    '''Lists members in the server in order.'''
     try:
         x = [m.nick for m in bot.guilds[0].members if not m.bot]
         x.sort()
