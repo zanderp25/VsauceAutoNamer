@@ -37,7 +37,7 @@ async def nextvsauce(ctx):
 @bot.command(name = "list")
 async def listmembers(ctx):
         try:
-                x = [m.nick for m in ctx.guild.members if not m.bot]
+                x = [m.nick for m in bot.guild[0].members if not m.bot]
                 x.sort()
                 await ctx.send(embed = discord.Embed(title = "List of members", description = ", ".join(x) + n + f"Number of members: {len(x)}", color = discord.Color.greyple()))
         except Exception as e:
