@@ -1,4 +1,4 @@
-import discord, traceback, regex
+import discord, traceback, re
 from discord.colour import Color
 intents = discord.Intents(messages=True, members=True, guilds=True)
 from discord.ext import commands
@@ -30,7 +30,7 @@ async def on_member_join(member):
         await bot.guilds[0].get_member(511655498676699136).send(f"Error! ```{traceback.format_exc()}```")
 
 async def get_next():
-    x = [m.nick for m in bot.guilds[0].members if not m.bot and regex.match(r'^Vsauce([1-9]?[0-9]{2})$',m.nick)]
+    x = [m.nick for m in bot.guilds[0].members if not m.bot and re.match(r'^Vsauce([1-9]?[0-9]{2})$',m.nick)]
     x.sort()
     o = ""
     for y in range(10, len(x)+1):
@@ -67,7 +67,7 @@ async def listmembers(ctx):
 @commands.has_permissions(8)
 async def fixmembers(ctx):
     for member in ctx.guild.members:
-        if not regex.match(r'^Vsauce([1-9]?[0-9]{2})$',member.nick):
+        if not re.match(r'^Vsauce([1-9]?[0-9]{2})$',member.nick):
             await member.edit(nick=await get_next())
 
 
