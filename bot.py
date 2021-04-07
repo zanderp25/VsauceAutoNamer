@@ -64,7 +64,7 @@ async def listmembers(ctx):
         await ctx.send(embed = discord.Embed(title = "Error", description = f"I have encountered an error.```{e}```", color = discord.Color.red()))
 
 @bot.command(name = "fix")
-@commands.has_permissions(8)
+@commands.has_guild_permissions(administrator=True)
 async def fixmembers(ctx):
     for member in ctx.guild.members:
         if not re.match(r'^Vsauce([1-9]?[0-9]{2})$',member.nick):
