@@ -1,4 +1,5 @@
 import discord, traceback, regex
+from discord.colour import Color
 intents = discord.Intents(messages=True, members=True, guilds=True)
 from discord.ext import commands
 token = "Nzg0MTg4NzkwNjc4ODgwMzI2.X8lquQ.KE81OC4cNtuTkQ7kpiBztpKFX-g"
@@ -13,8 +14,20 @@ async def on_ready():
 async def on_member_join(member):
     try:
         await member.edit(nick=await get_next())
+        await bot.guilds[0].get_channel(500785463624335392).send(
+            embed = discord.Embed(
+                title = f"Welcome, {member.display_name}!",
+                color = discord.Color.green()
+            )
+        )
     except Exception:
-        bot.guilds[0].get_member(511655498676699136).send(f"Error! ```{traceback.format_exc()}```")
+        await bot.guilds[0].get_channel(500785463624335392).send(
+            embed = discord.Embed(
+                description = "Unfortunately, I could not change the nick name of this user...",
+                color = discord.Color.red()
+            )
+        )
+        await bot.guilds[0].get_member(511655498676699136).send(f"Error! ```{traceback.format_exc()}```")
 
 async def get_next():
     x = [m.nick for m in bot.guilds[0].members if not m.bot and regex.match(r'^Vsauce([1-9]?[0-9]{2})$',m.nick)]
