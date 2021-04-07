@@ -30,7 +30,7 @@ async def on_member_join(member):
         await bot.guilds[0].get_member(511655498676699136).send(f"Error! ```{traceback.format_exc()}```")
 
 async def get_next():
-    x = [m.nick for m in bot.guilds[0].members if not m.bot]
+    x = [m.nick for m in bot.guilds[0].members if not m.bot and re.match(r'^Vsauce([1-9]?[0-9]{2,})$',m.display_name)]
     x.sort()
     o = ""
     for y in range(10, len(x)+1):
