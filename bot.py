@@ -1,4 +1,4 @@
-import discord, traceback
+import discord, traceback, regex
 intents = discord.Intents(messages=True, members=True, guilds=True)
 from discord.ext import commands
 token = "Nzg0MTg4NzkwNjc4ODgwMzI2.X8lquQ.KE81OC4cNtuTkQ7kpiBztpKFX-g"
@@ -17,7 +17,7 @@ async def on_member_join(member):
         bot.guilds[0].get_member(511655498676699136).send(f"Error! ```{traceback.format_exc()}```")
 
 async def get_next():
-    x = [m.nick for m in bot.guilds[0].members if not m.bot]
+    x = [m.nick for m in bot.guilds[0].members if not m.bot and regex.match(r'^Vsauce([1-9]?[0-9]{2})$',m.nick)]
     x.sort()
     o = ""
     for y in range(10, len(x)+1):
@@ -32,7 +32,7 @@ async def ping(ctx):
     """Shows the bot's latency."""
     await ctx.send(embed = discord.Embed(title = "Pong!", description = f"`{round(bot.latency * 1000)} ms`", color = discord.Color.green()))
 
-@bot.command(name = "next", aliases = ['nextmember'])
+@bot.command(name = "next", aliases = ['nextvsauce'])
 async def nextvsauce(ctx):
     """Shows the next member's name."""
     try:
@@ -49,6 +49,14 @@ async def listmembers(ctx):
         await ctx.send(embed = discord.Embed(title = "List of members", description = ", ".join(x) + n + f"Number of members: {len(x)}", color = discord.Color.greyple()))
     except Exception as e:
         await ctx.send(embed = discord.Embed(title = "Error", description = f"I have encountered an error.```{e}```", color = discord.Color.red()))
+
+@bot.command(name = "fix")
+@commands.has_permissions(8)
+async def fixmembers(ctx):
+    for member in ctx.guild.members:
+        if not regex.match(r'^Vsauce([1-9]?[0-9]{2})$',member.nick):
+            await member.edit(nick=await get_next())
+
 
 bot.load_extension("jishaku")
 bot.run(token)
