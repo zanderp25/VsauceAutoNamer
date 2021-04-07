@@ -67,7 +67,7 @@ async def listmembers(ctx):
 @commands.has_guild_permissions(administrator=True)
 async def fixmembers(ctx):
     for member in ctx.guild.members:
-        if not re.match(r'^Vsauce([1-9]?[0-9]{2,})$',member.display_name):
+        if not re.match(r'^Vsauce([1-9]?[0-9]{2,})$',member.display_name) and not member.bot:
             await member.edit(nick=await get_next())
 
 
