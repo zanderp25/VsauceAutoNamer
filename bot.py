@@ -57,9 +57,9 @@ async def nextvsauce(ctx):
 async def listmembers(ctx):
     '''Lists members in the server in order.'''
     try:
-        x = [m.nick for m in bot.guilds[0].members if not m.bot]
+        x = [f"{m.nick} (`{m}`)" for m in bot.guilds[0].members if not m.bot]
         x.sort()
-        await ctx.send(embed = discord.Embed(title = "List of members", description = ", ".join(x) + n + f"Number of members: {len(x)}", color = discord.Color.greyple()))
+        await ctx.send(embed = discord.Embed(title = "List of members", description = n.join(x) + n + f"Number of members: {len(x)}", color = discord.Color.greyple()))
     except Exception as e:
         await ctx.send(embed = discord.Embed(title = "Error", description = f"I have encountered an error.```{e}```", color = discord.Color.red()))
 
