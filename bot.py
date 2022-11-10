@@ -1,6 +1,6 @@
 import discord, traceback, re
 from discord.colour import Color
-intents = discord.Intents(messages=True, members=True, guilds=True)
+intents = discord.Intents(messages=True, members=True, guilds=True, message_content=True)
 from discord.ext import commands
 token = "Nzg0MTg4NzkwNjc4ODgwMzI2.X8lquQ.KE81OC4cNtuTkQ7kpiBztpKFX-g"
 bot = commands.Bot(command_prefix = commands.when_mentioned_or("*"), intents=intents)
