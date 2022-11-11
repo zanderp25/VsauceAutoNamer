@@ -52,13 +52,15 @@ async def get_next():
 @bot.hybrid_command()
 async def ping(ctx):
     """Shows the bot's latency."""
-    await ctx.interaction.response.defer()
+    try: await ctx.interaction.response.defer()
+    except AttributeError: pass
     await ctx.reply(embed = discord.Embed(title = "Pong!", description = f"`{round(bot.latency * 1000)} ms`", color = discord.Color.green()))
 
 @bot.hybrid_command(name = "next", aliases = ['nextvsauce'])
 async def nextvsauce(ctx):
     """Shows the next member's name."""
-    await ctx.interaction.response.defer()
+    try: await ctx.interaction.response.defer()
+    except AttributeError: pass
     try:
         await ctx.reply(embed = discord.Embed(title = "The next Vsauce", description = f"The next Vsauce will be {await get_next()}.", color = discord.Color.blurple()))
     except Exception as e:
@@ -67,7 +69,8 @@ async def nextvsauce(ctx):
 @bot.hybrid_command(name = "list")
 async def listmembers(ctx):
     '''Lists members in the server in order.'''
-    await ctx.interaction.response.defer()
+    try: await ctx.interaction.response.defer()
+    except AttributeError: pass
     try:
         x = [f"{m.nick} (`{m}`)" for m in bot.guilds[0].members if not m.bot]
         x.sort()
@@ -78,6 +81,8 @@ async def listmembers(ctx):
 @bot.hybrid_command(name = "fix")
 @commands.has_guild_permissions(administrator=True)
 async def fixmembers(ctx):
+    try: await ctx.interaction.response.defer()
+    except AttributeError: pass
     for member in ctx.guild.members:
         if not re.match(r'^Vsauce([1-9]?[0-9]{2,})$',member.display_name) and not member.bot:
             await member.edit(nick=await get_next())
