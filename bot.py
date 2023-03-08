@@ -26,13 +26,16 @@ async def on_member_join(member):
         await channel.send(
             embed = discord.Embed(
                 title = f"Welcome, {member.display_name}!",
+                description = f"Welcome to the Vsauce Discord server, {member.mention}! You have now been assigned {member.display_name}.\n\n"
+                f"Please read the rules in <#792530791816364032>, get verified with </verify:1081655008291991573>, and enjoy your stay!",
                 color = discord.Color.green()
             )
         )
     except Exception:
         await channel.send(
             embed = discord.Embed(
-                description = "Unfortunately, I could not change the nick name of this user...",
+                title = f"Welcome, {member.display_name}!",
+                description = f"Error: I could not assign a nick name to {member.mention}.",
                 color = discord.Color.red()
             )
         )
