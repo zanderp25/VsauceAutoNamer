@@ -27,7 +27,7 @@ async def on_member_join(member):
             embed = discord.Embed(
                 title = f"Welcome, {member.display_name}!",
                 description = f"Welcome to the Vsauce Discord server, {member.mention}! You have now been assigned {member.display_name}.\n\n"
-                f"Please read the rules in <#792530791816364032>, get verified with </verify:1081655008291991573>, and enjoy your stay!",
+                f"Please read the rules in <#792530791816364032> and enjoy your stay!",
                 color = discord.Color.green()
             )
         )
