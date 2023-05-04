@@ -3,6 +3,7 @@ from discord.colour import Color
 intents = discord.Intents.all()
 from discord.ext import commands
 token = "Nzg0MTg4NzkwNjc4ODgwMzI2.X8lquQ.KE81OC4cNtuTkQ7kpiBztpKFX-g"
+owner_ids = {511655498676699136, 1078147341141409843}
 bot = commands.Bot(command_prefix = commands.when_mentioned_or("*"), intents=intents)
 n = "\n"
 
