@@ -86,11 +86,32 @@ async def listmembers(ctx):
 @commands.has_guild_permissions(administrator=True)
 async def fixmembers(ctx):
     '''Fixes all nicknames that do not comply with the rules.'''
+    fixed_nicknames=[]
+    errored_nicknames=[]
     try: await ctx.interaction.response.defer()
     except AttributeError: pass
     for member in ctx.guild.members:
         if not re.match(r'^Vsauce([1-9]?[0-9]{2,})$',member.display_name) and not member.bot:
-            await member.edit(nick=await get_next())
-            await ctx.send(f"Fixed {member.display_name}")
+            try:
+                await member.edit(nick=await get_next())
+                fixed_nicknames.append(member.mention)
+            except:
+                errored_nicknames.append(member.mention)
+    if len(fixed_nicknames) + len(errored_nicknames) == 0:
+        return await ctx.send("Nothing to fix.")
+    message = ""
+    if len(fixed_nicknames) > 0:
+        message = "Fixed:\n- "
+        message += "\n- ".join(fixed_nicknames)
+        message += "\n"
+    if len(errored_nicknames) > 0:
+        message = "Errored:\n- "
+        message += "\n- ".join(errored_nicknames)
+        message += "\n"
+    return await ctx.send(embed=discord.Embed(
+        title="Fix Nicknames",
+        description=message,
+        color=discord.Color.red(),
+    ))
 
 bot.run(token)
