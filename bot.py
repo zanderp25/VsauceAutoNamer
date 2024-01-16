@@ -85,6 +85,7 @@ async def listmembers(ctx):
 @bot.hybrid_command(name = "fix")
 @commands.has_guild_permissions(administrator=True)
 async def fixmembers(ctx):
+    '''Fixes all nicknames that do not comply with the rules.'''
     try: await ctx.interaction.response.defer()
     except AttributeError: pass
     for member in ctx.guild.members:
